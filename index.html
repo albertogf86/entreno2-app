@@ -8,271 +8,862 @@
 <meta name="apple-mobile-web-app-title" content="Híbrido">
 <meta name="theme-color" content="#0f0e17">
 <title>Híbrido — Tu Plan</title>
-<!-- PWA -->
 <link rel="manifest" href="./manifest.json">
-<!-- ICONOS -->
+
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
 
+<meta name="theme-color" content="#0f0e17">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Híbrido">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
 
 :root {
-  --bg: #0f0e17; --bg2: #1a1927; --bg3: #22203a;
-  --border: rgba(255,255,255,0.08); --text: #f0eeff;
-  --muted: rgba(240,238,255,0.45); --accent: #7c6ff7;
-  --accent2: #a594f9; --green: #3ecf8e;
-  --radius: 14px; --font: 'Syne', sans-serif; --mono: 'DM Mono', monospace;
-  --push: #7c6ff7; --pull: #3ecf8e; --cardio: #38bdf8; --full: #f4a738;
+  --bg: #0f0e17;
+  --bg2: #1a1927;
+  --bg3: #22203a;
+  --border: rgba(255,255,255,0.08);
+  --text: #f0eeff;
+  --muted: rgba(240,238,255,0.45);
+  --accent: #7c6ff7;
+  --accent2: #a594f9;
+  --green: #3ecf8e;
+  --amber: #f4a738;
+  --red: #f07167;
+  --push: #7c6ff7;
+  --pull: #3ecf8e;
+  --cardio: #38bdf8;
+  --full: #f4a738;
+  --radius: 14px;
+  --font: 'Syne', sans-serif;
+  --mono: 'DM Mono', monospace;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; overflow: hidden; background: #0f0e17; font-family: var(--font); color: var(--text); }
+html, body {
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  background: #0f0e17;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 15px; }
 
+/* LAYOUT */
 .app { display: flex; flex-direction: column; height: 100dvh; }
-.screen { flex: 1; overflow-y: auto; padding: 16px 16px 90px; display: none; }
+.screen { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 16px 90px; display: none; }
 .screen.active { display: block; }
 
 /* NAV */
 .nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg2); border-top: 1px solid var(--border); display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
-.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px 8px; cursor: pointer; border: none; background: none; color: var(--muted); font-size: 10px; font-weight: 600; text-transform: uppercase; }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px 8px; cursor: pointer; border: none; background: none; color: var(--muted); font-family: var(--font); font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
 .nav-btn.active { color: var(--accent2); }
 .nav-btn svg { width: 22px; height: 22px; }
 
 /* CARDS */
 .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
 .card-sm { background: var(--bg3); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
-.home-hero { background: linear-gradient(135deg, rgba(124,111,247,0.3) 0%, rgba(62,207,142,0.15) 100%); border: 1px solid rgba(124,111,247,0.3); border-radius: 18px; padding: 24px; margin-bottom: 14px; }
 
-/* UI ELEMENTS */
-.chip { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
+/* TYPOGRAPHY */
+h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
+h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+.mono { font-family: var(--mono); }
+
+/* CHIPS */
+.chip { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.03em; }
 .chip-push { background: rgba(124,111,247,0.18); color: var(--push); }
 .chip-pull { background: rgba(62,207,142,0.18); color: var(--pull); }
 .chip-cardio { background: rgba(56,189,248,0.15); color: var(--cardio); }
 .chip-full { background: rgba(244,167,56,0.18); color: var(--full); }
+.chip-rest { background: rgba(255,255,255,0.06); color: var(--muted); }
 
-.tabs { display: flex; gap: 5px; margin-bottom: 14px; }
-.tab { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; }
-.tab.active { background: var(--accent); color: white; }
+/* TABS */
+.tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+.tab { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-family: var(--font); letter-spacing: 0.02em; transition: all 0.15s; }
+.tab.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-.btn { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 12px; border-radius: 999px; border: none; background: var(--accent); color: white; cursor: pointer; width: 100%; }
+/* INPUTS */
+input[type=text], input[type=number], input[type=date], textarea, select {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font-family: var(--font); font-size: 13px; padding: 8px 10px;
+  width: 100%; outline: none; -webkit-appearance: none;
+}
+input[type=text]:focus, input[type=number]:focus, input[type=date]:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+}
+input.filled { background: rgba(124,111,247,0.12); border-color: rgba(124,111,247,0.4); }
+select option { background: var(--bg2); }
+
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 999px; border: none; background: var(--accent); color: white; cursor: pointer; font-family: var(--font); letter-spacing: 0.02em; }
+.btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
 .btn-green { background: var(--green); color: #0a2318; }
 
-input, select { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 10px; width: 100%; margin-top: 5px; font-family: var(--font); }
+/* STAT BOXES */
+.stat-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-bottom: 12px; }
+.stat-box { background: var(--bg3); border-radius: 10px; padding: 12px; }
+.stat-val { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
+.stat-unit { font-size: 12px; color: var(--muted); font-weight: 400; }
+.stat-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); color: #0a2318; font-weight: 700; padding: 8px 20px; border-radius: 999px; opacity: 0; transition: 0.3s; z-index: 1000; }
+/* MACRO BAR */
+.macro-bar { height: 8px; border-radius: 999px; overflow: hidden; display: flex; margin: 8px 0; }
+
+/* TABLE */
+.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.tbl th { text-align: left; padding: 6px 8px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+.tbl td { padding: 9px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+.tbl tr:last-child td { border-bottom: none; }
+
+/* PROGRESS */
+.prog-bar-wrap { flex: 1; height: 5px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+.prog-bar { height: 100%; border-radius: 999px; }
+
+/* EXERCISE ROW */
+.ex-row { background: var(--bg3); border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+.ex-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.ex-hint { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.series-wrap { display: grid; grid-template-columns: repeat(4,1fr); gap: 5px; }
+.serie-box { display: flex; flex-direction: column; gap: 3px; }
+.serie-lbl { font-size: 9px; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; text-align: center; }
+.serie-inp { text-align: center; padding: 7px 4px; }
+.rpe-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.rpe-row label { font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; }
+.rpe-row select { width: 80px; flex-shrink: 0; }
+
+/* MEAL CARD */
+.meal-card { background: var(--bg3); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+.meal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+.meal-kcal { font-size: 12px; background: rgba(124,111,247,0.2); color: var(--accent2); padding: 2px 9px; border-radius: 999px; font-weight: 700; font-family: var(--mono); }
+.meal-macros { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+.m-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.meal-items { font-size: 13px; color: rgba(240,238,255,0.7); line-height: 1.7; }
+
+/* DOT */
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* SCROLL FIX */
+::-webkit-scrollbar { display: none; }
+
+/* HEADER */
+.screen-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-top: 8px; }
+
+/* TIP CARD */
+.tip-card { display: flex; gap: 12px; background: var(--bg3); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+.tip-icon { font-size: 22px; flex-shrink: 0; }
+
+/* SUPP CARD */
+.supp-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+
+/* TOAST */
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); color: #0a2318; font-weight: 700; font-size: 13px; padding: 8px 20px; border-radius: 999px; z-index: 999; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .toast.show { opacity: 1; }
+
+/* HOME */
+.home-hero { background: linear-gradient(135deg, rgba(124,111,247,0.3) 0%, rgba(62,207,142,0.15) 100%); border: 1px solid rgba(124,111,247,0.3); border-radius: 18px; padding: 24px; margin-bottom: 14px; }
+.home-name { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 6px; }
+.home-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.quick-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-bottom: 14px; }
+.quick-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; transition: border-color 0.15s; }
+.quick-card:active { border-color: var(--accent); }
+.quick-icon { font-size: 24px; margin-bottom: 6px; }
+.quick-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.quick-sub { font-size: 11px; color: var(--muted); }
+
+@media (prefers-color-scheme: light) {
+  /* Keep dark theme always */
+}
 </style>
 </head>
 <body>
 
 <div class="app">
-  <!-- PANTALLAS -->
-  <div id="s-home" class="screen active">
-    <div class="home-hero">
-      <h1 style="font-size: 28px; font-weight: 800;">Híbrido</h1>
-      <p style="font-size: 13px; color: var(--muted); margin: 8px 0 16px;">Tu sistema de alto rendimiento.</p>
-      <button class="btn btn-green" onclick="exportarParaIA()">✨ Copiar datos para mi Profesora IA</button>
-    </div>
-    <div id="home-content"></div>
-  </div>
 
-  <div id="s-plan" class="screen">
-    <h2 style="margin-bottom:15px;">Plan Semanal</h2>
-    <div id="plan-list"></div>
-  </div>
+  <div id="s-home" class="screen active"></div>
+  <div id="s-plan" class="screen"></div>
+  <div id="s-registro" class="screen"></div>
+  <div id="s-nutri" class="screen"></div>
 
-  <div id="s-registro" class="screen">
-    <h2 style="margin-bottom:15px;">Registro de Sesión</h2>
-    <div id="registro-ui"></div>
-  </div>
-
-  <div id="s-nutri" class="screen">
-    <h2 style="margin-bottom:15px;">Nutrición</h2>
-    <div class="tabs">
-      <button class="tab active" onclick="renderNutri('fuerza', this)">Fuerza</button>
-      <button class="tab" onclick="renderNutri('cardio', this)">Cardio</button>
-      <button class="tab" onclick="renderNutri('descanso', this)">Descanso</button>
-    </div>
-    <div id="nutri-list"></div>
-  </div>
-
-  <!-- NAVEGACIÓN -->
   <nav class="nav">
     <button class="nav-btn active" onclick="goTo('home',this)">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg>
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
       Inicio
     </button>
     <button class="nav-btn" onclick="goTo('plan',this)">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg>
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
       Plan
     </button>
     <button class="nav-btn" onclick="goTo('registro',this)">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2v-4"/></svg>
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2v-4"/><path d="M15 3h6v6"/><path d="M21 3l-9 9"/></svg>
       Registro
     </button>
     <button class="nav-btn" onclick="goTo('nutri',this)">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 4-3 7-7 10"/></svg>
-      Nutri
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 4-3 7-7 10C9 16 5 13 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Nutrición
     </button>
   </nav>
+
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">✓ Guardado</div>
 
 <script>
-// ─── TUS DATOS REALES ────────────────────────────────────────────────────────
-const DAYS = [
-  { id:'lun', label:'Lunes', chipClass:'chip-push', type:'Torso A — Empuje', exercises:[
-    {name:'Dips pecho (inclinado)', series:4}, {name:'Dips tríceps (vertical)', series:4}, {name:'Pike push-up', series:4}, {name:'Flexiones arquero', series:3}
-  ]},
-  { id:'mar', label:'Martes', chipClass:'chip-cardio', type:'Cardio — Zona 2', desc:'35 min · 72-82% FC (Ritmo suave)'},
-  { id:'mie', label:'Miércoles', chipClass:'chip-pull', type:'Torso B — Tracción', exercises:[
-    {name:'Dominadas pronadas', series:4}, {name:'Chin-up supino', series:3}, {name:'Remo invertido', series:4}, {name:'Elevación de piernas', series:3}
-  ]},
-  { id:'jue', label:'Jueves', chipClass:'chip-cardio', type:'Cardio — HIIT', desc:'Intervalos · 30" máx / 60" suave'},
-  { id:'vie', label:'Viernes', chipClass:'chip-full', type:'Full Body + Pierna', exercises:[
-    {name:'Sentadilla búlgara', series:4}, {name:'Hip thrust suelo', series:4}, {name:'Zancada lateral', series:3}, {name:'Dominadas (mant.)', series:3}
-  ]}
+// ─── STATE ───────────────────────────────────────────────────────────────────
+// Carga automática del estado guardado
+let state = JSON.parse(localStorage.getItem('hibrido_app_state')) || {
+  planWeek: 0, planDay: 0,
+  regWeek: 0, regDay: 0, regView: 'training',
+  nutriTab: 'macros', nutriDay: 'fuerza',
+  registro: {}, // w_dayId: {done, date, notes, series[][], rpe[], cardio[]}
+  anthro: {},
+};
+
+// Función para guardar el estado en cualquier momento
+function saveState() {
+  localStorage.setItem('hibrido_app_state', JSON.stringify(state));
+}
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const WEEKS = [
+  {label:'S1 — Acumulación', color:'#7c6ff7'},
+  {label:'S2 — Desarrollo', color:'#5b52d4'},
+  {label:'S3 — Intensificación', color:'#3d3699'},
+  {label:'S4 — Descarga', color:'#555'},
 ];
 
+const DAYS = [
+  { id:'lun', label:'Lunes', chipClass:'chip-push', type:'Torso A — Empuje', sub:'Dip Bars · Pecho, tríceps, deltoides',
+    exercises:[
+      {name:'Dips pecho (inclinado ~30°)', hint:'Codos abiertos, bajada 3"', targets:['3×6-8','3×8-10','4×8-10','3×6'], series:4},
+      {name:'Dips tríceps (torso vertical)', hint:'Codos pegados, rango completo', targets:['3×6-8','3×8-10','4×8-10','3×6'], series:4},
+      {name:'Pike push-up (pies en barras)', hint:'Cadera alta — hombros', targets:['3×6','3×8','4×8','3×5'], series:4},
+      {name:'Flexiones arquero en barras', hint:'Alternadas, peso al lado que baja', targets:['3×4c/l','3×6c/l','3×8c/l','2×4c/l'], series:3},
+      {name:'Dead bug', hint:'Espalda en suelo, respiración diafragmática', targets:['2×8c/l','2×10c/l','2×10c/l','2×8c/l'], series:2},
+      {name:'Plancha frontal', hint:'En barras o suelo — antiextensión', targets:['3×40"','3×50"','3×60"','2×40"'], series:3},
+    ]},
+  { id:'mar', label:'Martes', chipClass:'chip-cardio', type:'Cardio — Zona 2', sub:'Cinta / carrera / bici · 72-82% FC',
+    cardio:true, cardioFields:['Duración (min)','Modalidad','FC media (ppm)'], cardioPlaceholders:['35','Cinta / calle / bici','138'],
+    targets:['30 min','35 min','40-45 min','25 min'],
+    desc:'Ritmo conversacional. Si puedes cantar vas muy lento, si no puedes hablar vas muy rápido.'},
+  { id:'mie', label:'Miércoles', chipClass:'chip-pull', type:'Torso B — Tracción', sub:'Barra dominadas · Dorsal, bíceps, romboides',
+    exercises:[
+      {name:'Dominadas pronadas (agarre ancho)', hint:'Bajada 3" controlada, pecho al frente', targets:['4×4-6','4×6-8','4×8-10','3×4'], series:4},
+      {name:'Chin-up supino (bíceps)', hint:'Agarre cerrado, codos junto al cuerpo', targets:['3×5-6','3×6-8','3×8-10','2×5'], series:3},
+      {name:'Remo invertido en barra baja', hint:'Cuerpo recto, tira pecho a barra', targets:['3×8','3×10','4×12','3×8'], series:4},
+      {name:'Dominada excéntrica (negativa 5-8")', hint:'Sube con impulso, baja muy lento', targets:['3×4','3×5','3×6','2×3'], series:3},
+      {name:'Elevación de piernas colgado', hint:'Core + flexores cadera en barra', targets:['3×8','3×10','3×12','2×8'], series:3},
+      {name:'Bird dog', hint:'Lumbar profunda + glúteo medio', targets:['2×8c/l','2×10c/l','2×10c/l','2×8c/l'], series:2},
+    ]},
+  { id:'jue', label:'Jueves', chipClass:'chip-cardio', type:'Cardio — HIIT', sub:'Intervalos · ~25 min · Eleva VO2max',
+    cardio:true, hiit:true, cardioFields:['Series completadas','Modalidad'], cardioPlaceholders:['8','Cinta / calle / burpees'],
+    targets:['6 series','8 series','10 series','5 series'],
+    desc:'5 min calentamiento + series × 30" máxima intensidad / 60" caminando + 5 min vuelta a calma.'},
+  { id:'vie', label:'Viernes', chipClass:'chip-full', type:'Full body + pierna', sub:'Dip Bars + barra · Cuádriceps, glúteo, torso',
+    exercises:[
+      {name:'Sentadilla búlgara (pie en dip bar)', hint:'Pie trasero en barra, torso neutro', targets:['3×8c/l','3×10c/l','4×10c/l','3×6c/l'], series:4},
+      {name:'Hip thrust en suelo', hint:'Hombros en suelo, aprieta glúteo 1" arriba', targets:['3×12','3×15','4×15','3×10'], series:4},
+      {name:'Zancada lateral alternada', hint:'Frontal + lateral — glúteo medio', targets:['2×10c/l','3×10c/l','3×12c/l','2×8c/l'], series:3},
+      {name:'Dominadas (mantenimiento)', hint:'RPE 7 — no llegar al fallo', targets:['3×5','3×6','3×6','2×4'], series:3},
+      {name:'Dips (mantenimiento)', hint:'RPE 7 — mantener estímulo', targets:['3×6','3×8','3×8','2×5'], series:3},
+      {name:'L-sit en dip bars (isométrico)', hint:'Core + flexores — en GORNATION', targets:['3×5"','3×8"','3×10"','2×5"'], series:3},
+    ]},
+];
+
+const MACROS = {
+  fuerza:   {kcal:2400, p:160, c:230, f:65},
+  cardio:   {kcal:2200, p:155, c:190, f:65},
+  descanso: {kcal:2000, p:150, c:150, f:70},
+};
+
 const MEALS = {
-  fuerza: [
-    {name:'Desayuno', items:'Avena 80g + 3 Huevos + Plátano', kcal:620},
-    {name:'Comida', items:'Arroz 150g + Pollo 200g + Verduras', kcal:620},
-    {name:'Cena', items:'Salmón 180g + Boniato 200g', kcal:570}
+  fuerza:[
+    {time:'7:00', name:'Desayuno', items:['Avena 80g + leche desnatada 200ml','3 huevos revueltos','Plátano'], kcal:620, p:38, c:72, f:18},
+    {time:'10:30', name:'Media mañana', items:['Yogur griego 0% 200g','30g almendras','Fruta'], kcal:280, p:22, c:20, f:14},
+    {time:'13:30', name:'Comida', items:['Arroz blanco 150g cocido','Pechuga pollo 200g','Verduras salteadas','1 cda aceite oliva'], kcal:620, p:65, c:58, f:17},
+    {time:'17:00', name:'Pre-entreno', items:['Pan integral 2 rebanadas','Atún 1 lata (80g)','Tomate'], kcal:310, p:28, c:30, f:4},
+    {time:'20:00', name:'Cena post-entreno', items:['Salmón 180g','Boniato 200g','Ensalada verde'], kcal:570, p:42, c:44, f:18},
   ],
-  cardio: [{name:'Desayuno', items:'Avena 60g + 2 Huevos', kcal:520}],
-  descanso: [{name:'Comida', items:'Salmón + Arroz 100g + Verduras', kcal:580}]
+  cardio:[
+    {time:'7:00', name:'Desayuno', items:['Avena 60g + leche desnatada','2 huevos + 2 claras','Fruta pequeña'], kcal:520, p:34, c:58, f:14},
+    {time:'10:30', name:'Media mañana', items:['Queso cottage 200g','Fruta'], kcal:230, p:22, c:18, f:8},
+    {time:'13:30', name:'Comida', items:['Patata cocida 250g','Ternera magra 180g','Verduras al vapor','1 cda aceite oliva'], kcal:580, p:50, c:46, f:18},
+    {time:'17:30', name:'Merienda', items:['Yogur griego 0% 150g','30g nueces'], kcal:282, p:18, c:8, f:20},
+    {time:'20:00', name:'Cena', items:['Pechuga 150g','Ensalada abundante','Pan integral 1 rebanada'], kcal:390, p:38, c:22, f:10},
+  ],
+  descanso:[
+    {time:'8:00', name:'Desayuno', items:['3 huevos revueltos','Pan integral 1 rebanada','Aguacate 80g'], kcal:450, p:24, c:16, f:28},
+    {time:'11:00', name:'Media mañana', items:['Yogur griego 0% 200g','Fruta'], kcal:170, p:20, c:16, f:2},
+    {time:'14:00', name:'Comida', items:['Salmón 180g','Arroz 100g cocido','Verduras asadas','1 cda aceite oliva'], kcal:580, p:42, c:32, f:22},
+    {time:'17:30', name:'Merienda', items:['30g almendras','Infusión'], kcal:174, p:6, c:6, f:14},
+    {time:'20:30', name:'Cena ligera', items:['Atún 2 latas (160g)','Ensalada grande','1 cda aceite oliva'], kcal:320, p:42, c:12, f:10},
+  ],
 };
 
 const TIPS = [
-  {icon:'🥩', title:'Proteína', text:'Distribuye 160g en 4-5 tomas diarias.'},
-  {icon:'💧', title:'Agua', text:'Bebe 3L al día. En Suiza el clima seco lo requiere.'}
+  {icon:'💧', title:'Hidratación', text:'2,5–3L al día. En días de cardio sube a 3,5L. La deshidratación reduce el rendimiento en dominadas hasta un 10%.'},
+  {icon:'🥩', title:'Timing proteína', text:'Distribuye la proteína en 4–5 tomas de 30–40g. El músculo solo sintetiza ~40g por ventana.'},
+  {icon:'🌙', title:'Cena pre-sueño', text:'Incluye proteína de absorción lenta (queso cottage, yogur griego). El sueño es cuando más GH produces.'},
+  {icon:'⚡', title:'Pre-entreno', text:'Come 60–90 min antes. Carbohidratos + proteína. Nunca entrenes en ayunas si el objetivo es ganar masa.'},
+  {icon:'📉', title:'Déficit inteligente', text:'300–400 kcal/día de déficit. Más = pérdida muscular. Tu objetivo es recomposición, no solo pérdida de peso.'},
+  {icon:'⚠️', title:'El abdomen es lo último', text:'La grasa visceral tarda más en irse. Verás cambios en torso y cara antes que en el abdomen. Es normal.'},
 ];
 
-// ─── LÓGICA DE LA APP ────────────────────────────────────────────────────────
-let state = JSON.parse(localStorage.getItem('hibrido_save')) || { registro: {} };
+const SUPPS = [
+  {name:'Creatina monohidrato', dose:'5g/día', timing:'Cualquier momento, constante', priority:'Alta', why:'El suplemento más respaldado. Aumenta fuerza en calistenia y velocidad de recuperación.'},
+  {name:'Proteína de suero (whey)', dose:'1 scoop (25-30g)', timing:'Post-entreno o para completar proteína', priority:'Media', why:'Solo si no llegas a 160g/día con comida real. Prioriza comida real siempre.'},
+  {name:'Vitamina D3 + K2', dose:'2000-4000 UI D3 + 100mcg K2', timing:'Con una comida con grasa', priority:'Media', why:'Déficit muy común. Impacta testosterona, sistema inmune y absorción de calcio.'},
+  {name:'Omega-3 (EPA/DHA)', dose:'2-3g EPA+DHA/día', timing:'Con comidas', priority:'Media', why:'Reduce inflamación, mejora recuperación muscular y salud cardiovascular.'},
+  {name:'Magnesio bisglicinato', dose:'300-400mg', timing:'Por la noche antes de dormir', priority:'Baja-media', why:'Mejora calidad del sueño y reduce calambres. Déficit frecuente en deportistas.'},
+];
 
-function goTo(screenId, btn) {
+// ─── REGISTRO HELPERS ────────────────────────────────────────────────────────
+function regKey(w, dayId) { return `${w}_${dayId}`; }
+function getReg(w, dayId) {
+  const k = regKey(w, dayId);
+  if (!state.registro[k]) {
+    const d = DAYS.find(x => x.id === dayId);
+    state.registro[k] = {
+      done: false, date: '', notes: '',
+      series: d.exercises ? d.exercises.map(e => Array(4).fill('')) : [],
+      rpe: d.exercises ? d.exercises.map(() => '') : [],
+      cardio: d.cardioFields ? d.cardioFields.map(() => '') : [],
+    };
+  }
+  return state.registro[k];
+}
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+function goTo(id, btn) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('s-' + screenId).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  if(screenId === 'home') renderHome();
-  if(screenId === 'plan') renderPlan();
-  if(screenId === 'registro') renderRegistro();
-  if(screenId === 'nutri') renderNutri('fuerza');
+  document.getElementById('s-'+id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else document.querySelector(`.nav-btn[onclick="goTo('${id}',this)"]`).classList.add('active');
+  renderScreen(id);
 }
 
-function renderHome() {
-  document.getElementById('home-content').innerHTML = `
-    <h2 style="margin-bottom:10px;">Tips de Hoy</h2>
-    ${TIPS.map(t => `<div class="card-sm" style="display:flex; gap:12px;"><span>${t.icon}</span><div><strong>${t.title}</strong><p style="font-size:12px; color:var(--muted);">${t.text}</p></div></div>`).join('')}
-  `;
+function renderScreen(id) {
+  const el = document.getElementById('s-'+id);
+  if (id === 'home') renderHome(el);
+  else if (id === 'plan') renderPlan(el);
+  else if (id === 'registro') renderRegistro(el);
+  else if (id === 'nutri') renderNutri(el);
 }
 
-function renderPlan() {
-  document.getElementById('plan-list').innerHTML = DAYS.map(d => `
-    <div class="card">
-      <span class="chip ${d.chipClass}">${d.label}</span>
-      <h3>${d.type}</h3>
-      <p style="font-size:12px; color:var(--muted); margin-top:4px;">${d.desc || d.exercises.length + ' ejercicios'}</p>
-    </div>
-  `).join('');
+function showToast(msg='✓ Completado') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
 }
 
-function renderRegistro() {
-  document.getElementById('registro-ui').innerHTML = `
-    <div class="card">
-      <label class="label">Selecciona el día</label>
-      <select id="reg-day" onchange="updateRegFields()">
-        ${DAYS.map(d => `<option value="${d.id}">${d.label} - ${d.type}</option>`).join('')}
-      </select>
-      <div id="fields-area" style="margin-top:20px;"></div>
-      <button class="btn" style="margin-top:20px;" onclick="saveEntry()">Guardar entrenamiento</button>
-    </div>
-  `;
-  updateRegFields();
-}
-
-function updateRegFields() {
-  const dayId = document.getElementById('reg-day').value;
-  const day = DAYS.find(d => d.id === dayId);
-  const area = document.getElementById('fields-area');
-
-  if(day.exercises) {
-    area.innerHTML = day.exercises.map(ex => `
-      <div style="margin-bottom:15px;">
-        <p style="font-size:13px; font-weight:700;">${ex.name}</p>
-        <input type="text" id="in-${ex.name.replace(/ /g,'')}" placeholder="${ex.series} series (ej: 10/10/8/8)">
-      </div>
-    `).join('');
-  } else {
-    area.innerHTML = `<p style="font-size:13px; color:var(--accent2);">${day.desc}</p><input type="text" id="in-cardio" placeholder="Resultado (tiempo, pulsaciones...)">`;
-  }
-}
-
-function saveEntry() {
-  const dayId = document.getElementById('reg-day').value;
-  const day = DAYS.find(d => d.id === dayId);
-  const entry = { date: new Date().toLocaleDateString(), data: {} };
-
-  if(day.exercises) {
-    day.exercises.forEach(ex => {
-      entry.data[ex.name] = document.getElementById(`in-${ex.name.replace(/ /g,'')}`).value;
-    });
-  } else {
-    entry.data['Resumen'] = document.getElementById('in-cardio').value;
-  }
-
-  if(!state.registro[dayId]) state.registro[dayId] = [];
-  state.registro[dayId].push(entry);
-  localStorage.setItem('hibrido_save', JSON.stringify(state));
-  showToast("✓ Guardado en tu móvil");
-}
-
-function renderNutri(type, btn) {
-  if(btn) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  document.getElementById('nutri-list').innerHTML = MEALS[type].map(m => `
-    <div class="meal-card" style="background:var(--bg3); padding:15px; border-radius:10px; margin-bottom:10px;">
-      <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-        <h3 style="font-size:15px;">${m.name}</h3>
-        <span style="color:var(--accent2); font-weight:bold; font-family:var(--mono);">${m.kcal} kcal</span>
-      </div>
-      <p style="font-size:13px; color:var(--muted);">${m.items}</p>
-    </div>
-  `).join('');
-}
-
+// ─── MODIFICACIONES FUNCIONALES ──────────────────────────────────────────────
 function exportarParaIA() {
-  let texto = "PROFESORA IA - REPORTE ALBERTO:\n\n";
+  let texto = "REPORTE DE ENTRENAMIENTO - ALBERTO GÁLVEZ:\n\n";
   let hayDatos = false;
   
-  Object.keys(state.registro).forEach(id => {
-    state.registro[id].forEach(e => {
-      hayDatos = true;
-      texto += `📅 ${e.date} | ${id.toUpperCase()}\n`;
-      Object.entries(e.data).forEach(([k,v]) => texto += `  - ${k}: ${v}\n`);
+  [0,1,2,3].forEach(w => {
+    DAYS.forEach(d => {
+      const r = state.registro[regKey(w, d.id)];
+      if(r && r.done) {
+        hayDatos = true;
+        texto += `📅 S${w+1} ${d.label} (${d.type}) [${r.date || 'Sin fecha'}]\n`;
+        if(d.exercises) {
+          d.exercises.forEach((ex, i) => {
+            const reps = r.series[i].filter(v => v !== '').join('/');
+            if(reps) texto += `  - ${ex.name}: ${reps} (RPE ${r.rpe[i]})\n`;
+          });
+        } else if(d.cardio) {
+           d.cardioFields.forEach((f, i) => {
+             if(r.cardio[i]) texto += `  - ${f}: ${r.cardio[i]}\n`;
+           });
+        }
+        if(r.notes) texto += `  📝 Nota: ${r.notes}\n`;
+        texto += "\n";
+      }
     });
   });
 
-  if(!hayDatos) { alert("No hay entrenos registrados aún."); return; }
+  if(!hayDatos) {
+    alert("Todavía no tienes sesiones marcadas como completadas para exportar.");
+    return;
+  }
 
-  navigator.clipboard.writeText(texto).then(() => showToast("✨ Datos listos para pegar en la IA"));
+  navigator.clipboard.writeText(texto).then(() => {
+    showToast("✨ Datos copiados para la IA");
+  });
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+// ─── HOME ─────────────────────────────────────────────────────────────────────
+function renderHome(el) {
+  const totalDone = Object.values(state.registro).filter(r => r.done).length;
+  const weeksDone = [0,1,2,3].filter(w => DAYS.every(d => (state.registro[regKey(w,d.id)]||{}).done)).length;
+
+  el.innerHTML = `
+    <div class="screen-header">
+      <div>
+        <div class="home-name">Tu Plan<br>Híbrido</div>
+        <div class="home-sub" style="margin-top:4px">Dip Bars + Dominadas · 4 semanas</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:28px;font-weight:800;color:var(--accent2)">${totalDone}<span style="font-size:14px;color:var(--muted);font-weight:400">/20</span></div>
+        <div style="font-size:11px;color:var(--muted)">sesiones</div>
+      </div>
+    </div>
+
+    <div class="home-hero">
+      <div style="font-size:12px;color:var(--accent2);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Perfil</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        ${[['71 kg','Peso'],['1,78 m','Altura'],['~16%','Grasa est.']].map(([v,l])=>`
+          <div><div style="font-size:20px;font-weight:800;letter-spacing:-0.02em">${v}</div><div style="font-size:11px;color:var(--muted)">${l}</div></div>
+        `).join('')}
+      </div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.1)">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600">SEMANAS COMPLETADAS</div>
+        <div style="display:flex;gap:6px">
+          ${[0,1,2,3].map(w => {
+            const done = DAYS.every(d => (state.registro[regKey(w,d.id)]||{}).done);
+            return `<div style="flex:1;height:6px;border-radius:999px;background:${done?WEEKS[w].color:'rgba(255,255,255,0.1)'}"></div>`;
+          }).join('')}
+        </div>
+      </div>
+      
+      <button class="btn btn-green" style="width:100%; margin-top:20px; justify-content:center;" onclick="exportarParaIA()">
+        ✨ Copiar datos para mi Profesora IA
+      </button>
+    </div>
+
+    <div class="quick-grid">
+      <div class="quick-card" onclick="goTo('plan',null)">
+        <div class="quick-icon">📋</div>
+        <div class="quick-title">Plan de entreno</div>
+        <div class="quick-sub">5 días · Calistenia pura</div>
+      </div>
+      <div class="quick-card" onclick="goTo('registro',null)">
+        <div class="quick-icon">✏️</div>
+        <div class="quick-title">Registro</div>
+        <div class="quick-sub">${totalDone} sesiones completadas</div>
+      </div>
+      <div class="quick-card" onclick="goTo('nutri',null)">
+        <div class="quick-icon">🥗</div>
+        <div class="quick-title">Nutrición</div>
+        <div class="quick-sub">160g proteína · déficit 300 kcal</div>
+      </div>
+      <div class="quick-card" onclick="goTo('nutri',null);setTimeout(()=>{state.nutriTab='tips';renderScreen('nutri')},50)">
+        <div class="quick-icon">💡</div>
+        <div class="quick-title">Claves</div>
+        <div class="quick-sub">Postura · sueño · déficit</div>
+      </div>
+    </div>
+
+    <div class="card" style="background:rgba(62,207,142,0.08);border-color:rgba(62,207,142,0.2)">
+      <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px">Recuerda hoy</div>
+      <div style="font-size:13px;color:rgba(240,238,255,0.8);line-height:1.6">
+        160g de proteína al día, pase lo que pase con el resto. Eso es lo único no negociable de la nutrición.
+      </div>
+    </div>
+  `;
 }
 
-window.onload = renderHome;
+// ─── PLAN ─────────────────────────────────────────────────────────────────────
+function renderPlan(el) {
+  const w = state.planWeek;
+  const di = state.planDay;
+  const day = DAYS[di];
+
+  el.innerHTML = `
+    <div class="screen-header">
+      <h1>Plan</h1>
+      <span class="chip chip-rest mono">${WEEKS[w].label}</span>
+    </div>
+
+    <div class="tabs">
+      ${WEEKS.map((wk,i) => `<button class="tab ${w===i?'active':''}" onclick="state.planWeek=${i};renderScreen('plan')">${i===3?'Descarga':'S'+(i+1)}</button>`).join('')}
+    </div>
+
+    <div class="tabs">
+      ${DAYS.map((d,i) => `<button class="tab ${di===i?'active':''}" onclick="state.planDay=${i};renderScreen('plan')">${d.label}</button>`).join('')}
+    </div>
+
+    <div class="card">
+      <span class="chip ${day.chipClass}" style="margin-bottom:8px">${day.type}</span>
+      <div style="font-size:17px;font-weight:800;margin-bottom:2px">${day.label}</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">${day.sub}</div>
+
+      ${day.targets ? `<div style="background:var(--bg3);border-radius:8px;padding:10px 12px;font-size:13px;color:rgba(240,238,255,0.75);margin-bottom:14px">
+        <span style="font-weight:700;color:var(--text)">Objetivo semana ${w+1}:</span> ${day.targets[w]}${day.hiit?' × 30" sprint / 60" caminando':day.cardio?' Zona 2 — ritmo conversacional':''}
+      </div>` : ''}
+
+      ${day.desc ? `<div style="font-size:13px;color:rgba(240,238,255,0.65);line-height:1.65;margin-bottom:14px">${day.desc}</div>` : ''}
+
+      ${day.exercises ? day.exercises.map(ex => `
+        <div class="ex-row">
+          <div class="ex-name">${ex.name}</div>
+          <div class="ex-hint">${ex.hint}</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--muted);font-weight:700">OBJETIVO</span>
+            <span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--accent2)">${ex.targets[w]}</span>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:8px;font-size:12px;color:var(--muted)">
+            <span>${ex.series} series</span>
+            <span>·</span>
+            <span>RPE ${w===3?'6':'7-'+(w===2?'9':'8')}</span>
+          </div>
+        </div>
+      `).join('') : ''}
+    </div>
+
+    <div class="card">
+      <div class="label">Progresión sin pesas — herramientas</div>
+      ${[
+        ['Más reps','Completas todo con facilidad → añade 2 reps la siguiente semana'],
+        ['Tempo excéntrico','Baja en 3-5" para más tensión sin añadir peso'],
+        ['Más series','Cuando las reps no progresan, añade una serie al ejercicio principal'],
+        ['Variante difícil','Dips → lean forward · Dominadas → archer pull-up'],
+      ].map(([t,d])=>`
+        <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+          <div style="font-weight:700;font-size:13px;margin-bottom:2px">${t}</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.5">${d}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ─── REGISTRO ─────────────────────────────────────────────────────────────────
+function renderRegistro(el) {
+  const v = state.regView;
+
+  if (v === 'summary') {
+    renderRegistroSummary(el);
+    return;
+  }
+
+  const w = state.regWeek;
+  const di = state.regDay;
+  const day = DAYS[di];
+  const reg = getReg(w, day.id);
+
+  el.innerHTML = `
+    <div class="screen-header">
+      <h1>Registro</h1>
+      <button class="tab ${v==='summary'?'active':''}" onclick="state.regView='summary';renderScreen('registro')">Resumen</button>
+    </div>
+
+    <div class="tabs">
+      ${WEEKS.map((wk,i) => `<button class="tab ${w===i?'active':''}" onclick="state.regWeek=${i};renderScreen('registro')" style="--c:${wk.color}">${i===3?'Desc':'S'+(i+1)}</button>`).join('')}
+    </div>
+
+    <div class="tabs">
+      ${DAYS.map((d,i) => {
+        const done = (state.registro[regKey(w,d.id)]||{}).done;
+        return `<button class="tab ${di===i?'active':''} ${done?'':''}
+          " style="${done?'background:rgba(62,207,142,0.15);border-color:rgba(62,207,142,0.3);color:var(--green)':''}"
+          onclick="state.regDay=${i};renderScreen('registro')">${d.label}${done?' ✓':''}</button>`;
+      }).join('')}
+    </div>
+
+    <div class="card">
+      <span class="chip ${day.chipClass}" style="margin-bottom:8px">${day.type}</span>
+      <div style="font-size:17px;font-weight:800;margin-bottom:12px">${day.label}</div>
+
+      ${day.targets ? `<div style="background:var(--bg3);border-radius:8px;padding:9px 12px;font-size:13px;color:rgba(240,238,255,0.7);margin-bottom:14px">
+        <strong style="color:var(--text)">Objetivo S${w+1}:</strong> ${day.targets[w]}
+      </div>` : ''}
+
+      <span class="label">Fecha</span>
+      <input type="date" value="${reg.date}" onchange="getReg(${w},'${day.id}').date=this.value; saveState();" style="margin-bottom:12px">
+
+      ${day.cardio ? `
+        <span class="label">Registro cardio</span>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px">
+          ${day.cardioFields.map((f,i) => `
+            <div>
+              <div style="font-size:11px;color:var(--muted);font-weight:700;margin-bottom:4px">${f}</div>
+              <input type="text" placeholder="${day.cardioPlaceholders[i]}" value="${reg.cardio[i]}"
+                onchange="getReg(${w},'${day.id}').cardio[${i}]=this.value; saveState();">
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+      ${day.exercises ? day.exercises.map((ex, ei) => `
+        <div class="ex-row">
+          <div class="ex-name">${ex.name}</div>
+          <div class="ex-hint">${ex.hint}</div>
+          <div style="font-size:11px;font-weight:700;color:var(--accent2);margin-bottom:8px;font-family:var(--mono)">objetivo: ${ex.targets[w]}</div>
+          <div class="series-wrap">
+            ${[0,1,2,3].map(si => si < ex.series ? `
+              <div class="serie-box">
+                <div class="serie-lbl">S${si+1}</div>
+                <input type="text" class="serie-inp ${reg.series[ei][si]?'filled':''}" placeholder="reps"
+                  value="${reg.series[ei][si]}"
+                  onchange="getReg(${w},'${day.id}').series[${ei}][${si}]=this.value;this.classList.toggle('filled',!!this.value); saveState();">
+              </div>
+            ` : `<div></div>`).join('')}
+          </div>
+          <div class="rpe-row">
+            <label>RPE</label>
+            <select onchange="getReg(${w},'${day.id}').rpe[${ei}]=this.value; saveState();">
+              ${['—','6','7','7.5','8','8.5','9','9.5','10'].map(v => `<option ${reg.rpe[ei]===v?'selected':''}>${v}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+      `).join('') : ''}
+
+      <span class="label" style="margin-top:14px">Notas / sensaciones</span>
+      <textarea rows="3" placeholder="¿Cómo fue? ¿Qué mejoró?" onchange="getReg(${w},'${day.id}').notes=this.value; saveState();">${reg.notes}</textarea>
+
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-green" onclick="getReg(${w},'${day.id}').done=true; saveState(); showToast('✓ Sesión completada'); renderScreen('registro')">
+          ✓ Completada
+        </button>
+        ${reg.done ? `<span style="font-size:12px;background:rgba(62,207,142,0.15);color:var(--green);padding:8px 14px;border-radius:999px;font-weight:700">✓ Marcada</span>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderRegistroSummary(el) {
+  const totalDone = Object.values(state.registro).filter(r=>r.done).length;
+
+  el.innerHTML = `
+    <div class="screen-header">
+      <h1>Resumen</h1>
+      <button class="tab active" onclick="state.regView='training';renderScreen('registro')">← Volver</button>
+    </div>
+
+    <div class="card">
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-val" style="color:var(--accent2)">${totalDone}<span class="stat-unit">/20</span></div>
+          <div class="stat-lbl">Sesiones totales</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color:var(--green)">${[0,1,2,3].filter(w=>DAYS.every(d=>(state.registro[regKey(w,d.id)]||{}).done)).length}<span class="stat-unit">/4</span></div>
+          <div class="stat-lbl">Semanas completas</div>
+        </div>
+      </div>
+      ${[0,1,2,3].map(w => {
+        const done = DAYS.filter(d=>(state.registro[regKey(w,d.id)]||{}).done).length;
+        const pct = Math.round(done/5*100);
+        return `
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span style="font-size:12px;font-weight:700;width:110px;flex-shrink:0">${WEEKS[w].label.split(' — ')[1]}</span>
+            <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%;background:${WEEKS[w].color}"></div></div>
+            <span style="font-size:12px;color:var(--muted);font-family:var(--mono);min-width:30px">${done}/5</span>
+          </div>`;
+      }).join('')}
+    </div>
+
+    <div class="card">
+      <span class="label">Medidas por semana</span>
+      <div style="overflow-x:auto">
+        <table class="tbl" style="min-width:420px">
+          <thead><tr><th>Medida</th><th>Inicio</th><th>S1</th><th>S2</th><th>S3</th><th>Final</th></tr></thead>
+          <tbody>
+            ${[['Peso (kg)','weight','72'],['Cintura (cm)','waist','94'],['Sueño (h)','sleep','7'],['% Grasa','fat','23']].map(([lbl,key,ph])=>`
+              <tr>
+                <td style="font-weight:600">${lbl}</td>
+                ${['inicio','s1','s2','s3','s4'].map(p=>`
+                  <td><input type="text" style="width:52px;text-align:center;padding:5px 4px" placeholder="${ph}"
+                    value="${state.anthro[key+'_'+p]||''}"
+                    onchange="state.anthro['${key}_${p}']=this.value; saveState();"></td>
+                `).join('')}
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="label">Estado de sesiones</span>
+      ${[0,1,2,3].map(w=>`
+        <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin:10px 0 6px">${WEEKS[w].label}</div>
+        ${DAYS.map(d=>{
+          const r = state.registro[regKey(w,d.id)]||{};
+          return `<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+            <div class="dot" style="background:${r.done?'var(--green)':'rgba(255,255,255,0.15)'}"></div>
+            <span style="font-weight:700;font-size:13px;width:80px">${d.label}</span>
+            <span style="font-size:12px;color:var(--muted);flex:1">${d.type}</span>
+            ${r.date?`<span style="font-size:10px;color:var(--muted);font-family:var(--mono)">${r.date}</span>`:''}
+          </div>`;
+        }).join('')}
+      `).join('')}
+    </div>
+  `;
+}
+
+// ─── NUTRICIÓN ────────────────────────────────────────────────────────────────
+function renderNutri(el) {
+  const t = state.nutriTab;
+  const dt = state.nutriDay;
+
+  el.innerHTML = `
+    <div class="screen-header">
+      <h1>Nutrición</h1>
+    </div>
+
+    <div class="tabs">
+      ${[['macros','Macros'],['meals','Comidas'],['supps','Suplementos'],['tips','Claves']].map(([id,lbl])=>
+        `<button class="tab ${t===id?'active':''}" onclick="state.nutriTab='${id}';renderScreen('nutri')">${lbl}</button>`
+      ).join('')}
+    </div>
+
+    ${t === 'macros' ? renderNutriMacros(dt) : ''}
+    ${t === 'meals' ? renderNutriMeals(dt) : ''}
+    ${t === 'supps' ? renderNutriSupps() : ''}
+    ${t === 'tips' ? renderNutriTips() : ''}
+  `;
+}
+
+function daySelector(active) {
+  return `<div class="tabs">
+    ${[['fuerza','Fuerza'],['cardio','Cardio'],['descanso','Descanso']].map(([id,lbl])=>
+      `<button class="tab ${active===id?'active':''}" onclick="state.nutriDay='${id}';renderScreen('nutri')">${lbl}</button>`
+    ).join('')}
+  </div>`;
+}
+
+function renderNutriMacros(dt) {
+  const m = MACROS[dt];
+  const desc = {fuerza:'Lunes / Miércoles / Viernes', cardio:'Martes / Jueves', descanso:'Sábado / Domingo'};
+  const pPct = Math.round(m.p*4/m.kcal*100);
+  const cPct = Math.round(m.c*4/m.kcal*100);
+  const fPct = Math.round(m.f*9/m.kcal*100);
+  return `
+    ${daySelector(dt)}
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">${desc[dt]}</div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val" style="color:var(--accent2)">${m.kcal}<span class="stat-unit"> kcal</span></div><div class="stat-lbl">Calorías objetivo</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:var(--green)">${m.p}<span class="stat-unit"> g</span></div><div class="stat-lbl">Proteína</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:var(--amber)">${m.c}<span class="stat-unit"> g</span></div><div class="stat-lbl">Carbohidratos</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:var(--red)">${m.f}<span class="stat-unit"> g</span></div><div class="stat-lbl">Grasas</div></div>
+    </div>
+    <div class="card">
+      <span class="label">Distribución calórica</span>
+      <div class="macro-bar">
+        <div style="width:${pPct}%;background:var(--green)"></div>
+        <div style="width:${cPct}%;background:var(--amber)"></div>
+        <div style="width:${fPct}%;background:var(--red)"></div>
+      </div>
+      <div style="display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:6px">
+        ${[['Proteína','var(--green)',pPct],['Carbos','var(--amber)',cPct],['Grasas','var(--red)',fPct]].map(([l,c,p])=>
+          `<span style="display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:${c};display:inline-block"></span>${l} ${p}%</span>`
+        ).join('')}
+      </div>
+    </div>
+    <div class="card" style="background:rgba(62,207,142,0.07);border-color:rgba(62,207,142,0.2)">
+      <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px">Por qué 160g proteína</div>
+      <div style="font-size:13px;color:rgba(240,238,255,0.75);line-height:1.65">
+        Con 59,6 kg de masa magra el rango óptimo es <strong style="color:var(--text)">2,4–2,7 g/kg de masa magra</strong> = 143–161g. Los carbos se modulan según el día; la proteína se mantiene alta siempre.
+      </div>
+    </div>
+  `;
+}
+
+function renderNutriMeals(dt) {
+  const meals = MEALS[dt];
+  const total = meals.reduce((s,m)=>({kcal:s.kcal+m.kcal,p:s.p+m.p,c:s.c+m.c,f:s.f+m.f}),{kcal:0,p:0,c:0,f:0});
+  return `
+    ${daySelector(dt)}
+    ${meals.map(m=>`
+      <div class="meal-card">
+        <div class="meal-header">
+          <div>
+            <div style="font-weight:700;font-size:14px">${m.name}</div>
+            <div style="font-size:12px;color:var(--muted)">${m.time}</div>
+          </div>
+          <span class="meal-kcal">${m.kcal}</span>
+        </div>
+        <div class="meal-macros">
+          <span class="m-tag" style="background:rgba(62,207,142,0.15);color:var(--green)">P ${m.p}g</span>
+          <span class="m-tag" style="background:rgba(244,167,56,0.15);color:var(--amber)">C ${m.c}g</span>
+          <span class="m-tag" style="background:rgba(240,113,103,0.15);color:var(--red)">G ${m.f}g</span>
+        </div>
+        <div class="meal-items">${m.items.map(i=>`· ${i}`).join('<br>')}</div>
+      </div>
+    `).join('')}
+    <div class="card" style="background:var(--bg3)">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Total del día</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        ${[['kcal','var(--accent2)',total.kcal+'kcal'],['P','var(--green)',total.p+'g'],['C','var(--amber)',total.c+'g'],['G','var(--red)',total.f+'g']].map(([l,c,v])=>
+          `<div><div style="font-size:16px;font-weight:800;color:${c};font-family:var(--mono)">${v}</div><div style="font-size:10px;color:var(--muted)">${l}</div></div>`
+        ).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderNutriSupps() {
+  const pc = {Alta:['rgba(62,207,142,0.15)','var(--green)'], Media:['rgba(124,111,247,0.15)','var(--accent2)'], 'Baja-media':['rgba(244,167,56,0.15)','var(--amber)'], Opcional:['rgba(255,255,255,0.06)','var(--muted)']};
+  return `
+    <div class="card" style="background:rgba(244,167,56,0.08);border-color:rgba(244,167,56,0.2)">
+      <div style="font-size:13px;color:rgba(240,238,255,0.75);line-height:1.65">
+        <strong style="color:var(--amber)">Comida real primero.</strong> Solo la creatina es recomendación firme. El resto depende de tu situación.
+      </div>
+    </div>
+    ${SUPPS.map(s=>`
+      <div class="supp-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+          <div style="font-weight:700;font-size:14px;flex:1;padding-right:8px">${s.name}</div>
+          <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:${pc[s.priority][0]};color:${pc[s.priority][1]};white-space:nowrap">${s.priority}</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">💊 ${s.dose} · ${s.timing}</div>
+        <div style="font-size:13px;color:rgba(240,238,255,0.7);line-height:1.6">${s.why}</div>
+      </div>
+    `).join('')}
+  `;
+}
+
+function renderNutriTips() {
+  return TIPS.map(t=>`
+    <div class="tip-card">
+      <div class="tip-icon">${t.icon}</div>
+      <div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:3px">${t.title}</div>
+        <div style="font-size:13px;color:rgba(240,238,255,0.7);line-height:1.6">${t.text}</div>
+      </div>
+    </div>
+  `).join('') + `
+    <div class="card" style="margin-top:4px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:10px">Para tu perfil específico</div>
+      ${[
+        ['No bajar de 1.800 kcal','Por debajo, el cuerpo cataboliza músculo. Déficit inteligente, no agresivo.'],
+        ['Consistencia sobre perfección','80% de adherencia durante 4 semanas supera cualquier plan perfecto seguido 3 días.'],
+        ['Pesa los alimentos 2 semanas','Solo al principio, para calibrar las porciones visualmente. Después ya no necesitas báscula.'],
+      ].map(([ti,tx])=>`
+        <div style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+          <div style="font-weight:700;font-size:13px;margin-bottom:2px">${ti}</div>
+          <div style="font-size:13px;color:rgba(240,238,255,0.65);line-height:1.55">${tx}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderScreen('home');
+// ─── SERVICE WORKER ─────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('./sw.js')
+      .then(() => {
+        console.log('Service Worker registrado');
+      })
+      .catch(err => {
+        console.log('SW error:', err);
+      });
+  });
+}
 </script>
 </body>
 </html>

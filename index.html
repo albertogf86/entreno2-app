@@ -15,12 +15,6 @@
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
 
-<!-- MOBILE -->
-<meta name="theme-color" content="#0f0e17">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Híbrido">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
 
@@ -67,137 +61,65 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); font
 .nav-btn.active { color: var(--accent2); }
 .nav-btn svg { width: 22px; height: 22px; }
 
-/* CARDS */
+/* CARDS & COMPONENTS */
 .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
 .card-sm { background: var(--bg3); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
-
-/* TYPOGRAPHY */
 h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
 h2 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
-h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-.label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
-.mono { font-family: var(--mono); }
-
-/* CHIPS */
-.chip { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.03em; }
+.chip { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.03em; margin-bottom: 4px; }
 .chip-push { background: rgba(124,111,247,0.18); color: var(--push); }
 .chip-pull { background: rgba(62,207,142,0.18); color: var(--pull); }
 .chip-cardio { background: rgba(56,189,248,0.15); color: var(--cardio); }
 .chip-full { background: rgba(244,167,56,0.18); color: var(--full); }
-.chip-rest { background: rgba(255,255,255,0.06); color: var(--muted); }
 
-/* TABS */
 .tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
-.tab { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-family: var(--font); letter-spacing: 0.02em; transition: all 0.15s; }
+.tab { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-family: var(--font); }
 .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-/* INPUTS */
-input[type=text], input[type=number], input[type=date], textarea, select {
-  background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
-  color: var(--text); font-family: var(--font); font-size: 13px; padding: 8px 10px;
-  width: 100%; outline: none; -webkit-appearance: none;
-}
-input[type=text]:focus, input[type=number]:focus, input[type=date]:focus, textarea:focus, select:focus {
-  border-color: var(--accent);
-}
-input.filled { background: rgba(124,111,247,0.12); border-color: rgba(124,111,247,0.4); }
-select option { background: var(--bg2); }
-
-/* BUTTONS */
-.btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 999px; border: none; background: var(--accent); color: white; cursor: pointer; font-family: var(--font); letter-spacing: 0.02em; }
-.btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 999px; border: none; background: var(--accent); color: white; cursor: pointer; font-family: var(--font); width: 100%; }
 .btn-green { background: var(--green); color: #0a2318; }
 
-/* STAT BOXES */
-.stat-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-bottom: 12px; }
-.stat-box { background: var(--bg3); border-radius: 10px; padding: 12px; }
-.stat-val { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
-.stat-unit { font-size: 12px; color: var(--muted); font-weight: 400; }
-.stat-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-/* MACRO BAR */
-.macro-bar { height: 8px; border-radius: 999px; overflow: hidden; display: flex; margin: 8px 0; }
-
-/* TABLE */
-.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
-.tbl th { text-align: left; padding: 6px 8px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-.tbl td { padding: 9px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
-.tbl tr:last-child td { border-bottom: none; }
-
-/* PROGRESS */
-.prog-bar-wrap { flex: 1; height: 5px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
-.prog-bar { height: 100%; border-radius: 999px; }
-
-/* EXERCISE ROW */
-.ex-row { background: var(--bg3); border-radius: 10px; padding: 12px; margin-bottom: 8px; }
-.ex-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
-.ex-hint { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
-.series-wrap { display: grid; grid-template-columns: repeat(4,1fr); gap: 5px; }
-.serie-box { display: flex; flex-direction: column; gap: 3px; }
-.serie-lbl { font-size: 9px; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; text-align: center; }
-.serie-inp { text-align: center; padding: 7px 4px; }
-.rpe-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-.rpe-row label { font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; }
-.rpe-row select { width: 80px; flex-shrink: 0; }
-
-/* MEAL CARD */
 .meal-card { background: var(--bg3); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
 .meal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
 .meal-kcal { font-size: 12px; background: rgba(124,111,247,0.2); color: var(--accent2); padding: 2px 9px; border-radius: 999px; font-weight: 700; font-family: var(--mono); }
-.meal-macros { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
-.m-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
-.meal-items { font-size: 13px; color: rgba(240,238,255,0.7); line-height: 1.7; }
 
-/* DOT */
-.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-/* SCROLL FIX */
-::-webkit-scrollbar { display: none; }
-
-/* HEADER */
-.screen-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-top: 8px; }
-
-/* TIP CARD */
-.tip-card { display: flex; gap: 12px; background: var(--bg3); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
-.tip-icon { font-size: 22px; flex-shrink: 0; }
-
-/* SUPP CARD */
-.supp-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
-
-/* TOAST */
+.home-hero { background: linear-gradient(135deg, rgba(124,111,247,0.3) 0%, rgba(62,207,142,0.15) 100%); border: 1px solid rgba(124,111,247,0.3); border-radius: 18px; padding: 24px; margin-bottom: 14px; }
 .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); color: #0a2318; font-weight: 700; font-size: 13px; padding: 8px 20px; border-radius: 999px; z-index: 999; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .toast.show { opacity: 1; }
-
-/* HOME */
-.home-hero { background: linear-gradient(135deg, rgba(124,111,247,0.3) 0%, rgba(62,207,142,0.15) 100%); border: 1px solid rgba(124,111,247,0.3); border-radius: 18px; padding: 24px; margin-bottom: 14px; }
-.home-name { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 6px; }
-.home-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
-.quick-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-bottom: 14px; }
-.quick-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; transition: border-color 0.15s; }
-.quick-card:active { border-color: var(--accent); }
-.quick-icon { font-size: 24px; margin-bottom: 6px; }
-.quick-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-.quick-sub { font-size: 11px; color: var(--muted); }
 </style>
 </head>
 <body>
 
 <div class="app">
-
   <!-- SCREENS -->
   <div id="s-home" class="screen active">
-      <div class="home-hero">
-          <div class="home-name">Híbrido</div>
-          <div class="home-sub">Entrenamiento y Nutrición Inteligente</div>
-          <button class="btn btn-green" onclick="exportarParaIA()" style="margin-top:15px; width:100%;">
-            ✨ Copiar para mi Profesora IA
-          </button>
-      </div>
-      <div id="home-content"></div>
+    <div class="home-hero">
+      <h1 style="margin-bottom: 4px;">Híbrido</h1>
+      <p style="font-size: 13px; color: var(--muted); margin-bottom: 16px;">Tu ecosistema de alto rendimiento.</p>
+      <button class="btn btn-green" onclick="exportarParaIA()">✨ Copiar para mi Profesora IA</button>
+    </div>
+    <div id="home-content"></div>
   </div>
-  <div id="s-plan" class="screen"></div>
-  <div id="s-registro" class="screen"></div>
-  <div id="s-nutri" class="screen"></div>
+
+  <div id="s-plan" class="screen">
+    <h2>Mi Plan Semanal</h2>
+    <div id="plan-list"></div>
+  </div>
+
+  <div id="s-registro" class="screen">
+    <h2>Registro Diario</h2>
+    <div id="registro-content"></div>
+  </div>
+
+  <div id="s-nutri" class="screen">
+    <h2>Nutrición y Macros</h2>
+    <div class="tabs">
+      <button class="tab active" onclick="setNutriTab('fuerza', this)">Fuerza</button>
+      <button class="tab" onclick="setNutriTab('cardio', this)">Cardio</button>
+      <button class="tab" onclick="setNutriTab('descanso', this)">Descanso</button>
+    </div>
+    <div id="nutri-content"></div>
+  </div>
 
   <!-- NAV -->
   <nav class="nav">
@@ -215,145 +137,185 @@ select option { background: var(--bg2); }
     </button>
     <button class="nav-btn" onclick="goTo('nutri',this)">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 4-3 7-7 10C9 16 5 13 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-      Nutrición
+      Nutri
     </button>
   </nav>
-
 </div>
 
-<div class="toast" id="toast">✓ Guardado</div>
+<div class="toast" id="toast">✓ Copiado al portapapeles</div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let state = {
-  planWeek: 0, planDay: 0,
-  regWeek: 0, regDay: 0, regView: 'training',
-  nutriTab: 'macros', nutriDay: 'fuerza',
-  registro: {}, 
-  anthro: {},
+// ─── DATA & STATE ────────────────────────────────────────────────────────────
+let state = JSON.parse(localStorage.getItem('hibrido_data')) || {
+  registro: {} // Aquí se guardarán tus marcas de entreno
 };
-
-// ─── DATA ────────────────────────────────────────────────────────────────────
-const WEEKS = [
-  {label:'S1 — Acumulación', color:'#7c6ff7'},
-  {label:'S2 — Desarrollo', color:'#5b52d4'},
-  {label:'S3 — Intensificación', color:'#3d3699'},
-  {label:'S4 — Descarga', color:'#555'},
-];
 
 const DAYS = [
-  { id:'lun', label:'Lunes', chipClass:'chip-push', type:'Torso A — Empuje', sub:'Dip Bars · Pecho, tríceps, deltoides',
-    exercises:[
-      {name:'Dips pecho (inclinado ~30°)', hint:'Codos abiertos, bajada 3"', targets:['3×6-8','3×8-10','4×8-10','3×6'], series:4},
-      {name:'Dips tríceps (torso vertical)', hint:'Codos pegados, rango completo', targets:['3×6-8','3×8-10','4×8-10','3×6'], series:4},
-      {name:'Pike push-up (pies en barras)', hint:'Cadera alta — hombros', targets:['3×6','3×8','4×8','3×5'], series:4},
-      {name:'Flexiones arquero en barras', hint:'Alternadas, peso al lado que baja', targets:['3×4c/l','3×6c/l','3×8c/l','2×4c/l'], series:3},
-      {name:'Dead bug', hint:'Espalda en suelo, respiración diafragmática', targets:['2×8c/l','2×10c/l','2×10c/l','2×8c/l'], series:2},
-      {name:'Plancha frontal', hint:'En barras o suelo — antiextensión', targets:['3×40"','3×50"','3×60"','2×40"'], series:3},
-    ]},
-  { id:'mar', label:'Martes', chipClass:'chip-cardio', type:'Cardio — Zona 2', sub:'Cinta / carrera / bici · 72-82% FC',
-    cardio:true, cardioFields:['Duración (min)','Modalidad','FC media (ppm)'], cardioPlaceholders:['35','Cinta / calle / bici','138'],
-    targets:['30 min','35 min','40-45 min','25 min'],
-    desc:'Ritmo conversacional. Si puedes cantar vas muy lento, si no puedes hablar vas muy rápido.'},
-  { id:'mie', label:'Miércoles', chipClass:'chip-pull', type:'Torso B — Tracción', sub:'Barra dominadas · Dorsal, bíceps, romboides',
-    exercises:[
-      {name:'Dominadas pronadas (agarre ancho)', hint:'Bajada 3" controlada, pecho al frente', targets:['4×4-6','4×6-8','4×8-10','3×4'], series:4},
-      {name:'Chin-up supino (bíceps)', hint:'Agarre cerrado, codos junto al cuerpo', targets:['3×5-6','3×6-8','3×8-10','2×5'], series:3},
-      {name:'Remo invertido en barra baja', hint:'Cuerpo recto, tira pecho a barra', targets:['3×8','3×10','4×12','3×8'], series:4},
-      {name:'Dominada excéntrica (negativa 5-8")', hint:'Sube con impulso, baja muy lento', targets:['3×4','3×5','3×6','2×3'], series:3},
-      {name:'Elevación de piernas colgado', hint:'Core + flexores cadera en barra', targets:['3×8','3×10','3×12','2×8'], series:3},
-      {name:'Bird dog', hint:'Lumbar profunda + glúteo medio', targets:['2×8c/l','2×10c/l','2×10c/l','2×8c/l'], series:2},
-    ]},
-  { id:'jue', label:'Jueves', chipClass:'chip-cardio', type:'Cardio — HIIT', sub:'Intervalos · ~25 min · Eleva VO2max',
-    cardio:true, hiit:true, cardioFields:['Series completadas','Modalidad'], cardioPlaceholders:['8','Cinta / calle / burpees'],
-    targets:['6 series','8 series','10 series','5 series'],
-    desc:'5 min calentamiento + series × 30" máxima intensidad / 60" caminando + 5 min vuelta a calma.'},
-  { id:'vie', label:'Viernes', chipClass:'chip-full', type:'Full body + pierna', sub:'Dip Bars + barra · Cuádriceps, glúteo, torso',
-    exercises:[
-      {name:'Sentadilla búlgara (pie en dip bar)', hint:'Pie trasero en barra, torso neutro', targets:['3×8c/l','3×10c/l','4×10c/l','3×6c/l'], series:4},
-      {name:'Hip thrust en suelo', hint:'Hombros en suelo, aprieta glúteo 1" arriba', targets:['3×12','3×15','4×15','3×10'], series:4},
-      {name:'Zancada lateral alternada', hint:'Frontal + lateral — glúteo medio', targets:['2×10c/l','3×10c/l','3×12c/l','2×8c/l'], series:3},
-      {name:'Dominadas (mantenimiento)', hint:'RPE 7 — no llegar al fallo', targets:['3×5','3×6','3×6','2×4'], series:3},
-      {name:'Dips (mantenimiento)', hint:'RPE 7 — mantener estímulo', targets:['3×6','3×8','3×8','2×5'], series:3},
-      {name:'L-sit en dip bars (isométrico)', hint:'Core + flexores — en GORNATION', targets:['3×5"','3×8"','3×10"','2×5"'], series:3},
-    ]},
+  { id:'lun', label:'Lunes', chipClass:'chip-push', type:'Torso A — Empuje', exercises:[
+    {name:'Dips pecho', series:4}, {name:'Dips tríceps', series:4}, {name:'Pike push-up', series:4}
+  ]},
+  { id:'mar', label:'Martes', chipClass:'chip-cardio', type:'Cardio — Zona 2', desc:'35 min carrera/bici'},
+  { id:'mie', label:'Miércoles', chipClass:'chip-pull', type:'Torso B — Tracción', exercises:[
+    {name:'Dominadas', series:4}, {name:'Chin-up', series:3}, {name:'Remo invertido', series:4}
+  ]},
+  { id:'jue', label:'Jueves', chipClass:'chip-cardio', type:'Cardio — HIIT', desc:'Intervalos alta intensidad'},
+  { id:'vie', label:'Viernes', chipClass:'chip-full', type:'Full Body + Pierna', exercises:[
+    {name:'Sentadilla búlgara', series:4}, {name:'Hip Thrust', series:4}, {name:'Zancada lateral', series:3}
+  ]}
 ];
 
-// ─── REGISTRO HELPERS ────────────────────────────────────────────────────────
-function regKey(w, dayId) { return `${w}_${dayId}`; }
-
-function getReg(w, dayId) {
-  const k = regKey(w, dayId);
-  if (!state.registro[k]) {
-    const d = DAYS.find(x => x.id === dayId);
-    state.registro[k] = {
-      done: false, date: '', notes: '',
-      series: d.exercises ? d.exercises.map(ex => Array(ex.series).fill('')) : [],
-      rpe: d.exercises ? Array(d.exercises.length).fill('') : [],
-      cardio: d.cardio ? Array(d.cardioFields.length).fill('') : []
-    };
-  }
-  return state.registro[k];
-}
-
-// ─── LOCAL STORAGE LOGIC ─────────────────────────────────────────────────────
-function saveToLocal() {
-    localStorage.setItem('hibrido_state', JSON.stringify(state));
-}
-
-function loadFromLocal() {
-    const saved = localStorage.getItem('hibrido_state');
-    if (saved) {
-        state = JSON.parse(saved);
-    }
-}
-
-// ─── EXPORT PARA IA ──────────────────────────────────────────────────────────
-function exportarParaIA() {
-    let texto = "Hola Profesora IA. Analiza mi progreso en Híbrido:\n\n";
-    
-    Object.keys(state.registro).forEach(key => {
-        const r = state.registro[key];
-        if (r.done) {
-            const [wIdx, dId] = key.split('_');
-            const d = DAYS.find(x => x.id === dId);
-            texto += `📅 SEMANA ${parseInt(wIdx)+1} - ${d.label} (${d.type})\n`;
-            if (d.exercises) {
-                d.exercises.forEach((ex, i) => {
-                    texto += `- ${ex.name}: ${r.series[i].join('/')} reps (RPE ${r.rpe[i]})\n`;
-                });
-            }
-            if (r.notes) texto += `📝 Notas: ${r.notes}\n`;
-            texto += "\n";
-        }
-    });
-
-    if (texto.length < 100) {
-        alert("Aún no tienes entrenamientos completados para exportar.");
-        return;
-    }
-
-    navigator.clipboard.writeText(texto).then(() => {
-        alert("¡Datos de entrenamiento copiados! Pégalos en el chat de tu IA.");
-    });
-}
-
-// ─── NAVIGATION ──────────────────────────────────────────────────────────────
-function goTo(screenId, btn) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('s-' + screenId).classList.add('active');
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    saveToLocal(); // Guardamos el estado de la pestaña actual
-}
-
-// Al cargar la ventana
-window.onload = () => {
-    loadFromLocal();
-    // Aquí puedes añadir llamadas a funciones que rendericen tu contenido inicial
-    console.log("App Híbrido cargada con LocalStorage");
+const MEALS = {
+  fuerza: [
+    {time:'07:00', name:'Desayuno', items:'Avena + 3 Huevos + Plátano', kcal:620},
+    {time:'13:30', name:'Comida', items:'Arroz + Pollo + Verduras', kcal:620}
+  ],
+  cardio: [
+    {time:'07:00', name:'Desayuno', items:'Avena + 2 Huevos + Fruta', kcal:520},
+    {time:'13:30', name:'Comida', items:'Patata + Ternera + Verduras', kcal:580}
+  ],
+  descanso: [
+    {time:'08:00', name:'Desayuno', items:'3 Huevos + Aguacate', kcal:450}
+  ]
 };
 
+// ─── NAVIGATION & RENDER ─────────────────────────────────────────────────────
+function goTo(screenId, btn) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('s-' + screenId).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  
+  if(screenId === 'plan') renderPlan();
+  if(screenId === 'nutri') renderNutri('fuerza');
+  if(screenId === 'registro') renderRegistro();
+}
+
+function renderPlan() {
+  const container = document.getElementById('plan-list');
+  container.innerHTML = DAYS.map(day => `
+    <div class="card">
+      <span class="chip ${day.chipClass}">${day.label}</span>
+      <h3 style="margin-top:5px;">${day.type}</h3>
+      <p style="font-size:12px; color:var(--muted);">${day.desc || 'Entrenamiento de fuerza'}</p>
+    </div>
+  `).join('');
+}
+
+function renderNutri(type) {
+  const container = document.getElementById('nutri-content');
+  const meals = MEALS[type];
+  container.innerHTML = meals.map(m => `
+    <div class="meal-card">
+      <div class="meal-header">
+        <div>
+          <span class="label" style="font-size:9px; color:var(--muted);">${m.time}</span>
+          <h3 style="font-size:14px;">${m.name}</h3>
+        </div>
+        <span class="meal-kcal">${m.kcal} kcal</span>
+      </div>
+      <p class="meal-items">${m.items}</p>
+    </div>
+  `).join('');
+}
+
+function renderRegistro() {
+  const container = document.getElementById('registro-content');
+  container.innerHTML = `
+    <div class="card">
+      <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">Selecciona el día para registrar tus marcas:</p>
+      <select id="day-select" onchange="updateRegFields()" style="width:100%; padding:10px; background:var(--bg3); color:white; border:none; border-radius:8px;">
+        ${DAYS.map(d => `<option value="${d.id}">${d.label} - ${d.type}</option>`).join('')}
+      </select>
+      <div id="reg-fields" style="margin-top:15px;"></div>
+      <button class="btn" onclick="saveReg()" style="margin-top:15px;">Guardar sesión</button>
+    </div>
+  `;
+  updateRegFields();
+}
+
+function updateRegFields() {
+  const dayId = document.getElementById('day-select').value;
+  const day = DAYS.find(d => d.id === dayId);
+  const container = document.getElementById('reg-fields');
+  
+  if(day.exercises) {
+    container.innerHTML = day.exercises.map(ex => `
+      <div style="margin-bottom:12px;">
+        <label style="font-size:12px; font-weight:bold;">${ex.name} (${ex.series} series)</label>
+        <input type="text" placeholder="Ej: 10/10/8/8 reps" id="input-${dayId}-${ex.name.replace(/ /g,'')}" 
+               style="width:100%; padding:8px; margin-top:5px; background:var(--bg2); border:1px solid var(--border); color:white; border-radius:5px;">
+      </div>
+    `).join('');
+  } else {
+    container.innerHTML = `<p style="font-size:12px; color:var(--accent2);">${day.desc}</p>
+    <input type="text" placeholder="Notas del cardio..." id="input-${dayId}-cardio" style="width:100%; padding:8px; margin-top:5px; background:var(--bg2); border:1px solid var(--border); color:white; border-radius:5px;">`;
+  }
+}
+
+// ─── LOGIC & STORAGE ─────────────────────────────────────────────────────────
+function saveReg() {
+  const dayId = document.getElementById('day-select').value;
+  const day = DAYS.find(d => d.id === dayId);
+  
+  if(!state.registro[dayId]) state.registro[dayId] = [];
+  
+  const entry = { date: new Date().toLocaleDateString(), data: {} };
+  
+  if(day.exercises) {
+    day.exercises.forEach(ex => {
+      const val = document.getElementById(`input-${dayId}-${ex.name.replace(/ /g,'')}`).value;
+      entry.data[ex.name] = val;
+    });
+  } else {
+    entry.data['cardio'] = document.getElementById(`input-${dayId}-cardio`).value;
+  }
+  
+  state.registro[dayId].push(entry);
+  localStorage.setItem('hibrido_data', JSON.stringify(state));
+  showToast("✓ Sesión guardada en el dispositivo");
+}
+
+function exportarParaIA() {
+  let texto = "Hola Profesora IA, aquí tienes mi progreso en Híbrido:\n\n";
+  
+  Object.keys(state.registro).forEach(dayId => {
+    const day = DAYS.find(d => d.id === dayId);
+    state.registro[dayId].forEach(entry => {
+      texto += `📅 Fecha: ${entry.date} | Día: ${day.label}\n`;
+      Object.entries(entry.data).forEach(([key, val]) => {
+        texto += `   - ${key}: ${val}\n`;
+      });
+      texto += "\n";
+    });
+  });
+
+  if(texto.length < 100) {
+    alert("No hay datos registrados todavía.");
+    return;
+  }
+
+  navigator.clipboard.writeText(texto).then(() => {
+    showToast("✓ Datos copiados para Gemini");
+  });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function setNutriTab(type, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderNutri(type);
+}
+
+// Inicializar
+window.onload = () => {
+  console.log("Híbrido cargado.");
+};
 </script>
 </body>
 </html>

@@ -10,7 +10,6 @@
 <title>Híbrido — Tu Plan</title>
 <!-- PWA -->
 <link rel="manifest" href="./manifest.json">
-
 <!-- ICONOS -->
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
@@ -19,303 +18,261 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
 
 :root {
-  --bg: #0f0e17;
-  --bg2: #1a1927;
-  --bg3: #22203a;
-  --border: rgba(255,255,255,0.08);
-  --text: #f0eeff;
-  --muted: rgba(240,238,255,0.45);
-  --accent: #7c6ff7;
-  --accent2: #a594f9;
-  --green: #3ecf8e;
-  --amber: #f4a738;
-  --red: #f07167;
-  --push: #7c6ff7;
-  --pull: #3ecf8e;
-  --cardio: #38bdf8;
-  --full: #f4a738;
-  --radius: 14px;
-  --font: 'Syne', sans-serif;
-  --mono: 'DM Mono', monospace;
+  --bg: #0f0e17; --bg2: #1a1927; --bg3: #22203a;
+  --border: rgba(255,255,255,0.08); --text: #f0eeff;
+  --muted: rgba(240,238,255,0.45); --accent: #7c6ff7;
+  --accent2: #a594f9; --green: #3ecf8e;
+  --radius: 14px; --font: 'Syne', sans-serif; --mono: 'DM Mono', monospace;
+  --push: #7c6ff7; --pull: #3ecf8e; --cardio: #38bdf8; --full: #f4a738;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body {
-  height: 100%;
-  min-height: 100dvh;
-  overflow: hidden;
-  overscroll-behavior: none;
-  touch-action: manipulation;
-  background: #0f0e17;
-}
-body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 15px; }
+html, body { height: 100%; overflow: hidden; background: #0f0e17; font-family: var(--font); color: var(--text); }
 
-/* LAYOUT */
 .app { display: flex; flex-direction: column; height: 100dvh; }
-.screen { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 16px 90px; display: none; }
+.screen { flex: 1; overflow-y: auto; padding: 16px 16px 90px; display: none; }
 .screen.active { display: block; }
 
 /* NAV */
 .nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg2); border-top: 1px solid var(--border); display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
-.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px 8px; cursor: pointer; border: none; background: none; color: var(--muted); font-family: var(--font); font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 4px 8px; cursor: pointer; border: none; background: none; color: var(--muted); font-size: 10px; font-weight: 600; text-transform: uppercase; }
 .nav-btn.active { color: var(--accent2); }
 .nav-btn svg { width: 22px; height: 22px; }
 
-/* CARDS & COMPONENTS */
+/* CARDS */
 .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
 .card-sm { background: var(--bg3); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
-h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
-h2 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
-.chip { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.03em; margin-bottom: 4px; }
+.home-hero { background: linear-gradient(135deg, rgba(124,111,247,0.3) 0%, rgba(62,207,142,0.15) 100%); border: 1px solid rgba(124,111,247,0.3); border-radius: 18px; padding: 24px; margin-bottom: 14px; }
+
+/* UI ELEMENTS */
+.chip { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
 .chip-push { background: rgba(124,111,247,0.18); color: var(--push); }
 .chip-pull { background: rgba(62,207,142,0.18); color: var(--pull); }
 .chip-cardio { background: rgba(56,189,248,0.15); color: var(--cardio); }
 .chip-full { background: rgba(244,167,56,0.18); color: var(--full); }
 
-.tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
-.tab { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-family: var(--font); }
-.tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+.tabs { display: flex; gap: 5px; margin-bottom: 14px; }
+.tab { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; }
+.tab.active { background: var(--accent); color: white; }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 999px; border: none; background: var(--accent); color: white; cursor: pointer; font-family: var(--font); width: 100%; }
+.btn { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 12px; border-radius: 999px; border: none; background: var(--accent); color: white; cursor: pointer; width: 100%; }
 .btn-green { background: var(--green); color: #0a2318; }
 
-.meal-card { background: var(--bg3); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
-.meal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-.meal-kcal { font-size: 12px; background: rgba(124,111,247,0.2); color: var(--accent2); padding: 2px 9px; border-radius: 999px; font-weight: 700; font-family: var(--mono); }
+input, select { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 10px; width: 100%; margin-top: 5px; font-family: var(--font); }
 
-.home-hero { background: linear-gradient(135deg, rgba(124,111,247,0.3) 0%, rgba(62,207,142,0.15) 100%); border: 1px solid rgba(124,111,247,0.3); border-radius: 18px; padding: 24px; margin-bottom: 14px; }
-.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); color: #0a2318; font-weight: 700; font-size: 13px; padding: 8px 20px; border-radius: 999px; z-index: 999; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); color: #0a2318; font-weight: 700; padding: 8px 20px; border-radius: 999px; opacity: 0; transition: 0.3s; z-index: 1000; }
 .toast.show { opacity: 1; }
 </style>
 </head>
 <body>
 
 <div class="app">
-  <!-- SCREENS -->
+  <!-- PANTALLAS -->
   <div id="s-home" class="screen active">
     <div class="home-hero">
-      <h1 style="margin-bottom: 4px;">Híbrido</h1>
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 16px;">Tu ecosistema de alto rendimiento.</p>
-      <button class="btn btn-green" onclick="exportarParaIA()">✨ Copiar para mi Profesora IA</button>
+      <h1 style="font-size: 28px; font-weight: 800;">Híbrido</h1>
+      <p style="font-size: 13px; color: var(--muted); margin: 8px 0 16px;">Tu sistema de alto rendimiento.</p>
+      <button class="btn btn-green" onclick="exportarParaIA()">✨ Copiar datos para mi Profesora IA</button>
     </div>
     <div id="home-content"></div>
   </div>
 
   <div id="s-plan" class="screen">
-    <h2>Mi Plan Semanal</h2>
+    <h2 style="margin-bottom:15px;">Plan Semanal</h2>
     <div id="plan-list"></div>
   </div>
 
   <div id="s-registro" class="screen">
-    <h2>Registro Diario</h2>
-    <div id="registro-content"></div>
+    <h2 style="margin-bottom:15px;">Registro de Sesión</h2>
+    <div id="registro-ui"></div>
   </div>
 
   <div id="s-nutri" class="screen">
-    <h2>Nutrición y Macros</h2>
+    <h2 style="margin-bottom:15px;">Nutrición</h2>
     <div class="tabs">
-      <button class="tab active" onclick="setNutriTab('fuerza', this)">Fuerza</button>
-      <button class="tab" onclick="setNutriTab('cardio', this)">Cardio</button>
-      <button class="tab" onclick="setNutriTab('descanso', this)">Descanso</button>
+      <button class="tab active" onclick="renderNutri('fuerza', this)">Fuerza</button>
+      <button class="tab" onclick="renderNutri('cardio', this)">Cardio</button>
+      <button class="tab" onclick="renderNutri('descanso', this)">Descanso</button>
     </div>
-    <div id="nutri-content"></div>
+    <div id="nutri-list"></div>
   </div>
 
-  <!-- NAV -->
+  <!-- NAVEGACIÓN -->
   <nav class="nav">
     <button class="nav-btn active" onclick="goTo('home',this)">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg>
       Inicio
     </button>
     <button class="nav-btn" onclick="goTo('plan',this)">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg>
       Plan
     </button>
     <button class="nav-btn" onclick="goTo('registro',this)">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2v-4"/><path d="M15 3h6v6"/><path d="M21 3l-9 9"/></svg>
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2v-4"/></svg>
       Registro
     </button>
     <button class="nav-btn" onclick="goTo('nutri',this)">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 4-3 7-7 10C9 16 5 13 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 4-3 7-7 10"/></svg>
       Nutri
     </button>
   </nav>
 </div>
 
-<div class="toast" id="toast">✓ Copiado al portapapeles</div>
+<div class="toast" id="toast"></div>
 
 <script>
-// ─── DATA & STATE ────────────────────────────────────────────────────────────
-let state = JSON.parse(localStorage.getItem('hibrido_data')) || {
-  registro: {} // Aquí se guardarán tus marcas de entreno
-};
-
+// ─── TUS DATOS REALES ────────────────────────────────────────────────────────
 const DAYS = [
   { id:'lun', label:'Lunes', chipClass:'chip-push', type:'Torso A — Empuje', exercises:[
-    {name:'Dips pecho', series:4}, {name:'Dips tríceps', series:4}, {name:'Pike push-up', series:4}
+    {name:'Dips pecho (inclinado)', series:4}, {name:'Dips tríceps (vertical)', series:4}, {name:'Pike push-up', series:4}, {name:'Flexiones arquero', series:3}
   ]},
-  { id:'mar', label:'Martes', chipClass:'chip-cardio', type:'Cardio — Zona 2', desc:'35 min carrera/bici'},
+  { id:'mar', label:'Martes', chipClass:'chip-cardio', type:'Cardio — Zona 2', desc:'35 min · 72-82% FC (Ritmo suave)'},
   { id:'mie', label:'Miércoles', chipClass:'chip-pull', type:'Torso B — Tracción', exercises:[
-    {name:'Dominadas', series:4}, {name:'Chin-up', series:3}, {name:'Remo invertido', series:4}
+    {name:'Dominadas pronadas', series:4}, {name:'Chin-up supino', series:3}, {name:'Remo invertido', series:4}, {name:'Elevación de piernas', series:3}
   ]},
-  { id:'jue', label:'Jueves', chipClass:'chip-cardio', type:'Cardio — HIIT', desc:'Intervalos alta intensidad'},
+  { id:'jue', label:'Jueves', chipClass:'chip-cardio', type:'Cardio — HIIT', desc:'Intervalos · 30" máx / 60" suave'},
   { id:'vie', label:'Viernes', chipClass:'chip-full', type:'Full Body + Pierna', exercises:[
-    {name:'Sentadilla búlgara', series:4}, {name:'Hip Thrust', series:4}, {name:'Zancada lateral', series:3}
+    {name:'Sentadilla búlgara', series:4}, {name:'Hip thrust suelo', series:4}, {name:'Zancada lateral', series:3}, {name:'Dominadas (mant.)', series:3}
   ]}
 ];
 
 const MEALS = {
   fuerza: [
-    {time:'07:00', name:'Desayuno', items:'Avena + 3 Huevos + Plátano', kcal:620},
-    {time:'13:30', name:'Comida', items:'Arroz + Pollo + Verduras', kcal:620}
+    {name:'Desayuno', items:'Avena 80g + 3 Huevos + Plátano', kcal:620},
+    {name:'Comida', items:'Arroz 150g + Pollo 200g + Verduras', kcal:620},
+    {name:'Cena', items:'Salmón 180g + Boniato 200g', kcal:570}
   ],
-  cardio: [
-    {time:'07:00', name:'Desayuno', items:'Avena + 2 Huevos + Fruta', kcal:520},
-    {time:'13:30', name:'Comida', items:'Patata + Ternera + Verduras', kcal:580}
-  ],
-  descanso: [
-    {time:'08:00', name:'Desayuno', items:'3 Huevos + Aguacate', kcal:450}
-  ]
+  cardio: [{name:'Desayuno', items:'Avena 60g + 2 Huevos', kcal:520}],
+  descanso: [{name:'Comida', items:'Salmón + Arroz 100g + Verduras', kcal:580}]
 };
 
-// ─── NAVIGATION & RENDER ─────────────────────────────────────────────────────
+const TIPS = [
+  {icon:'🥩', title:'Proteína', text:'Distribuye 160g en 4-5 tomas diarias.'},
+  {icon:'💧', title:'Agua', text:'Bebe 3L al día. En Suiza el clima seco lo requiere.'}
+];
+
+// ─── LÓGICA DE LA APP ────────────────────────────────────────────────────────
+let state = JSON.parse(localStorage.getItem('hibrido_save')) || { registro: {} };
+
 function goTo(screenId, btn) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('s-' + screenId).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  
+
+  if(screenId === 'home') renderHome();
   if(screenId === 'plan') renderPlan();
-  if(screenId === 'nutri') renderNutri('fuerza');
   if(screenId === 'registro') renderRegistro();
+  if(screenId === 'nutri') renderNutri('fuerza');
+}
+
+function renderHome() {
+  document.getElementById('home-content').innerHTML = `
+    <h2 style="margin-bottom:10px;">Tips de Hoy</h2>
+    ${TIPS.map(t => `<div class="card-sm" style="display:flex; gap:12px;"><span>${t.icon}</span><div><strong>${t.title}</strong><p style="font-size:12px; color:var(--muted);">${t.text}</p></div></div>`).join('')}
+  `;
 }
 
 function renderPlan() {
-  const container = document.getElementById('plan-list');
-  container.innerHTML = DAYS.map(day => `
+  document.getElementById('plan-list').innerHTML = DAYS.map(d => `
     <div class="card">
-      <span class="chip ${day.chipClass}">${day.label}</span>
-      <h3 style="margin-top:5px;">${day.type}</h3>
-      <p style="font-size:12px; color:var(--muted);">${day.desc || 'Entrenamiento de fuerza'}</p>
-    </div>
-  `).join('');
-}
-
-function renderNutri(type) {
-  const container = document.getElementById('nutri-content');
-  const meals = MEALS[type];
-  container.innerHTML = meals.map(m => `
-    <div class="meal-card">
-      <div class="meal-header">
-        <div>
-          <span class="label" style="font-size:9px; color:var(--muted);">${m.time}</span>
-          <h3 style="font-size:14px;">${m.name}</h3>
-        </div>
-        <span class="meal-kcal">${m.kcal} kcal</span>
-      </div>
-      <p class="meal-items">${m.items}</p>
+      <span class="chip ${d.chipClass}">${d.label}</span>
+      <h3>${d.type}</h3>
+      <p style="font-size:12px; color:var(--muted); margin-top:4px;">${d.desc || d.exercises.length + ' ejercicios'}</p>
     </div>
   `).join('');
 }
 
 function renderRegistro() {
-  const container = document.getElementById('registro-content');
-  container.innerHTML = `
+  document.getElementById('registro-ui').innerHTML = `
     <div class="card">
-      <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">Selecciona el día para registrar tus marcas:</p>
-      <select id="day-select" onchange="updateRegFields()" style="width:100%; padding:10px; background:var(--bg3); color:white; border:none; border-radius:8px;">
+      <label class="label">Selecciona el día</label>
+      <select id="reg-day" onchange="updateRegFields()">
         ${DAYS.map(d => `<option value="${d.id}">${d.label} - ${d.type}</option>`).join('')}
       </select>
-      <div id="reg-fields" style="margin-top:15px;"></div>
-      <button class="btn" onclick="saveReg()" style="margin-top:15px;">Guardar sesión</button>
+      <div id="fields-area" style="margin-top:20px;"></div>
+      <button class="btn" style="margin-top:20px;" onclick="saveEntry()">Guardar entrenamiento</button>
     </div>
   `;
   updateRegFields();
 }
 
 function updateRegFields() {
-  const dayId = document.getElementById('day-select').value;
+  const dayId = document.getElementById('reg-day').value;
   const day = DAYS.find(d => d.id === dayId);
-  const container = document.getElementById('reg-fields');
-  
+  const area = document.getElementById('fields-area');
+
   if(day.exercises) {
-    container.innerHTML = day.exercises.map(ex => `
-      <div style="margin-bottom:12px;">
-        <label style="font-size:12px; font-weight:bold;">${ex.name} (${ex.series} series)</label>
-        <input type="text" placeholder="Ej: 10/10/8/8 reps" id="input-${dayId}-${ex.name.replace(/ /g,'')}" 
-               style="width:100%; padding:8px; margin-top:5px; background:var(--bg2); border:1px solid var(--border); color:white; border-radius:5px;">
+    area.innerHTML = day.exercises.map(ex => `
+      <div style="margin-bottom:15px;">
+        <p style="font-size:13px; font-weight:700;">${ex.name}</p>
+        <input type="text" id="in-${ex.name.replace(/ /g,'')}" placeholder="${ex.series} series (ej: 10/10/8/8)">
       </div>
     `).join('');
   } else {
-    container.innerHTML = `<p style="font-size:12px; color:var(--accent2);">${day.desc}</p>
-    <input type="text" placeholder="Notas del cardio..." id="input-${dayId}-cardio" style="width:100%; padding:8px; margin-top:5px; background:var(--bg2); border:1px solid var(--border); color:white; border-radius:5px;">`;
+    area.innerHTML = `<p style="font-size:13px; color:var(--accent2);">${day.desc}</p><input type="text" id="in-cardio" placeholder="Resultado (tiempo, pulsaciones...)">`;
   }
 }
 
-// ─── LOGIC & STORAGE ─────────────────────────────────────────────────────────
-function saveReg() {
-  const dayId = document.getElementById('day-select').value;
+function saveEntry() {
+  const dayId = document.getElementById('reg-day').value;
   const day = DAYS.find(d => d.id === dayId);
-  
-  if(!state.registro[dayId]) state.registro[dayId] = [];
-  
   const entry = { date: new Date().toLocaleDateString(), data: {} };
-  
+
   if(day.exercises) {
     day.exercises.forEach(ex => {
-      const val = document.getElementById(`input-${dayId}-${ex.name.replace(/ /g,'')}`).value;
-      entry.data[ex.name] = val;
+      entry.data[ex.name] = document.getElementById(`in-${ex.name.replace(/ /g,'')}`).value;
     });
   } else {
-    entry.data['cardio'] = document.getElementById(`input-${dayId}-cardio`).value;
+    entry.data['Resumen'] = document.getElementById('in-cardio').value;
   }
-  
+
+  if(!state.registro[dayId]) state.registro[dayId] = [];
   state.registro[dayId].push(entry);
-  localStorage.setItem('hibrido_data', JSON.stringify(state));
-  showToast("✓ Sesión guardada en el dispositivo");
+  localStorage.setItem('hibrido_save', JSON.stringify(state));
+  showToast("✓ Guardado en tu móvil");
+}
+
+function renderNutri(type, btn) {
+  if(btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  document.getElementById('nutri-list').innerHTML = MEALS[type].map(m => `
+    <div class="meal-card" style="background:var(--bg3); padding:15px; border-radius:10px; margin-bottom:10px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+        <h3 style="font-size:15px;">${m.name}</h3>
+        <span style="color:var(--accent2); font-weight:bold; font-family:var(--mono);">${m.kcal} kcal</span>
+      </div>
+      <p style="font-size:13px; color:var(--muted);">${m.items}</p>
+    </div>
+  `).join('');
 }
 
 function exportarParaIA() {
-  let texto = "Hola Profesora IA, aquí tienes mi progreso en Híbrido:\n\n";
+  let texto = "PROFESORA IA - REPORTE ALBERTO:\n\n";
+  let hayDatos = false;
   
-  Object.keys(state.registro).forEach(dayId => {
-    const day = DAYS.find(d => d.id === dayId);
-    state.registro[dayId].forEach(entry => {
-      texto += `📅 Fecha: ${entry.date} | Día: ${day.label}\n`;
-      Object.entries(entry.data).forEach(([key, val]) => {
-        texto += `   - ${key}: ${val}\n`;
-      });
-      texto += "\n";
+  Object.keys(state.registro).forEach(id => {
+    state.registro[id].forEach(e => {
+      hayDatos = true;
+      texto += `📅 ${e.date} | ${id.toUpperCase()}\n`;
+      Object.entries(e.data).forEach(([k,v]) => texto += `  - ${k}: ${v}\n`);
     });
   });
 
-  if(texto.length < 100) {
-    alert("No hay datos registrados todavía.");
-    return;
-  }
+  if(!hayDatos) { alert("No hay entrenos registrados aún."); return; }
 
-  navigator.clipboard.writeText(texto).then(() => {
-    showToast("✓ Datos copiados para Gemini");
-  });
+  navigator.clipboard.writeText(texto).then(() => showToast("✨ Datos listos para pegar en la IA"));
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-function setNutriTab(type, btn) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  renderNutri(type);
-}
-
-// Inicializar
-window.onload = () => {
-  console.log("Híbrido cargado.");
-};
+window.onload = renderHome;
 </script>
 </body>
 </html>
